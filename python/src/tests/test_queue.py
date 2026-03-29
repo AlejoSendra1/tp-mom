@@ -66,10 +66,10 @@ def test_init_and_close():
 def test_listen_to_message_and_close():
 	message = b"message"
 	message_set = set()
-	queue = middleware_rabbitmq.MessageMiddlewareQueueRabbitMQ(MOM_HOST, TEST_QUEUE_NAME)
-	queue.send(message)
-	message_consumer_tester = MessageConsumerTester(queue, message_set, 1)
-	queue.start_consuming(lambda message, ack, nack: message_consumer_tester.callback(message, ack, nack))
+	queue = middleware_rabbitmq.MessageMiddlewareQueueRabbitMQ(MOM_HOST, TEST_QUEUE_NAME) # crea una queue
+	queue.send(message)																	  # envia el "sessage"
+	message_consumer_tester = MessageConsumerTester(queue, message_set, 1)				  # crea un mesage consumer tester (agrega los msgs recibidos al set, consume hasta q el contador llega a 0)
+	queue.start_consuming(lambda message, ack, nack: message_consumer_tester.callback(message, ack, nack))  #
 
 	assert len(message_set) == 1, "The amount of consummed messages is not as expected"
 	assert message in message_set, f"The message {message} was not consummed"
