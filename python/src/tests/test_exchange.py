@@ -91,7 +91,9 @@ def _message_set_consumer(message_set, messages_before_close, routing_keys):
 	message_consumer_tester = MessageConsumerTester(consumer_exchange, message_set, messages_before_close)
 	consumer_exchange.start_consuming(lambda message, ack, nack: message_consumer_tester.callback(message, ack, nack))
 
-def _test_exchange(routing_keys_by_consumers, messages_by_routing_key):
+def _test_exchange(routing_keys_by_consumers, messages_by_routing_key): 
+	# recibe la llave de ruteo de cada customer
+	# y los msjs correspondientes q debe enviar a cada una 
 	with multiprocessing.Manager() as manager:
 		consumers = routing_keys_by_consumers.keys()
 		message_set_by_consumer = dict()
